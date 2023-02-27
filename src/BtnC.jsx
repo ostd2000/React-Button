@@ -1,146 +1,117 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
-import APP_COLORS from "./consts/colorConsts";
+import { APP_COLORS, APP_FONTS } from "./consts/colorConsts";
 
 const BtnC = ({
     children,
     primary,
-    primaryOutlined,
     secondary,
-    secondaryOutlined,
     danger,
-    dangerOutlined,
     disabled,
+    filled,
+    outlined,
+    dashed,
     xSmall,
     small,
     large,
     xLarge,
     icon,
-    btnOpt,
     sharpEdge,
+    opt,
+    ...otherProps
 }) => {
-    let btnStyles = {
-        width: "10rem",
-        height: "4rem",
+    const btnCRef = useRef();
 
-        borderRadius: "5px",
+    let btnBackgroundColor;
+    let btnColor;
+    let btnTxtColor;
 
-        ...btnOpt,
-    };
+    useEffect(() => {
+        btnCRef.current.style.width = "10rem";
+        btnCRef.current.style.height = "4rem";
 
-    if (primary) {
-        btnStyles = {
-            ...btnStyles,
-            color: "#000",
-            backgroundColor: APP_COLORS.COLOR_PRIMARY,
-        };
-    }
+        btnCRef.current.style.fontSize = APP_FONTS.FONT_SIZE_300;
 
-    if (primaryOutlined) {
-        btnStyles = {
-            ...btnStyles,
-            color: APP_COLORS.COLOR_PRIMARY,
-            backgroundColor: "transparent",
-            border: `2px solid ${APP_COLORS.COLOR_PRIMARY}`,
-        };
-    }
+        btnCRef.current.style.border = "none";
+        btnCRef.current.style.borderRadius = "3px";
 
-    if (secondary) {
-        btnStyles = {
-            ...btnStyles,
-            color: "#000",
-            backgroundColor: APP_COLORS.COLOR_SECONDARY,
-        };
-    }
+        btnCRef.current.style.color = "#000";
 
-    if (secondaryOutlined) {
-        btnStyles = {
-            ...btnStyles,
-            color: APP_COLORS.COLOR_SECONDARY,
-            backgroundColor: "transparent",
-            border: `2px solid ${APP_COLORS.COLOR_SECONDARY}`,
-        };
-    }
+        if (primary) {
+            btnBackgroundColor = APP_COLORS.COLOR_PRIMARY;
+            btnColor = APP_COLORS.COLOR_PRIMARY;
+        }
 
-    if (danger) {
-        btnStyles = {
-            ...btnStyles,
-            color: "#fff",
-            backgroundColor: APP_COLORS.COLOR_DANGER,
-        };
-    }
+        if (secondary) {
+            btnBackgroundColor = APP_COLORS.COLOR_SECONDARY;
+            btnColor = APP_COLORS.COLOR_SECONDARY;
+        }
 
-    if (dangerOutlined) {
-        btnStyles = {
-            ...btnStyles,
-            color: APP_COLORS.COLOR_DANGER,
-            backgroundColor: "transparent",
-            border: `2px solid ${APP_COLORS.COLOR_DANGER}`,
-        };
-    }
+        if (danger) {
+            btnBackgroundColor = APP_COLORS.COLOR_DANGER;
+            btnColor = APP_COLORS.COLOR_DANGER;
+            btnTxtColor = "#fff";
+        }
 
-    if (disabled) {
-        btnStyles = {
-            ...btnStyles,
-            color: APP_COLORS.COLOR_DISABLED_TEXT,
-            backgroundColor: "transparent",
-            border: `2px solid ${APP_COLORS.COLOR_DISABLED}`,
-            cursor: "not-allowed",
-        };
-    }
+        if (disabled) {
+            btnBackgroundColor = APP_COLORS.COLOR_DISABLED;
+            btnColor = APP_COLORS.COLOR_DISABLED_TEXT;
+            btnTxtColor = APP_COLORS.COLOR_DISABLED_TEXT;
 
-    if (xSmall) {
-        btnStyles = {
-            ...btnStyles,
-            width: "6rem",
-            height: "2rem",
-        };
-    }
+            btnCRef.current.style.cursor = "not-allowed";
+        }
 
-    if (small) {
-        btnStyles = {
-            ...btnStyles,
-            width: "8rem",
-            height: "3rem",
-        };
-    }
+        if (filled) {
+            btnCRef.current.style.backgroundColor = btnBackgroundColor;
+            btnCRef.current.style.color = btnTxtColor;
+        }
 
-    if (large) {
-        btnStyles = {
-            ...btnStyles,
-            width: "12rem",
-            height: "5rem",
-        };
-    }
+        if (outlined) {
+            btnCRef.current.style.backgroundColor = "transparent";
+            btnCRef.current.style.border = `2px solid ${btnColor}`;
+            btnCRef.current.style.color = btnColor;
+        }
 
-    if (xLarge) {
-        btnStyles = {
-            ...btnStyles,
-            width: "14rem",
-            height: "6rem",
-        };
-    }
+        if (dashed) {
+            btnCRef.current.style.backgroundColor = "transparent";
+            btnCRef.current.style.border = `2px dashed ${btnColor}`;
+            btnCRef.current.style.color = btnColor;
+        }
 
-    if (sharpEdge) {
-        btnStyles = {
-            ...btnStyles,
-            borderRadius: "0px",
-        };
-    }
+        if (xSmall) {
+            btnCRef.current.style.width = "6rem";
+            btnCRef.current.style.height = "2rem";
+        }
 
-    if (icon) {
-        btnStyles = {
-            ...btnStyles,
+        if (small) {
+            btnCRef.current.style.width = "8rem";
+            btnCRef.current.style.height = "3rem";
+        }
 
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "5px",
-        };
-    }
+        if (large) {
+            btnCRef.current.style.width = "12rem";
+            btnCRef.current.style.height = "5rem";
+        }
+
+        if (xLarge) {
+            btnCRef.current.style.width = "14rem";
+            btnCRef.current.style.height = "6rem";
+        }
+
+        if (sharpEdge) {
+            btnCRef.current.style.borderRadius = "0";
+        }
+
+        if (icon) {
+            btnCRef.current.style.display = "flex";
+            btnCRef.current.style.alignItems = "center";
+            btnCRef.current.style.justifyContent = "center";
+            btnCRef.current.style.gap = "5px";
+        }
+    }, []);
 
     return (
-        <button style={btnStyles}>
+        <button className="btn-c" ref={btnCRef} style={opt} {...otherProps}>
             {children}
             {icon}
         </button>
