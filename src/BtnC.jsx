@@ -20,100 +20,129 @@ const BtnC = ({
     opt,
     ...otherProps
 }) => {
-    const btnCRef = useRef();
+    let styles = {
+        width: "10rem",
+        height: "4rem",
+
+        fontSize: APP_FONTS.FONT_SIZE_300,
+
+        border: "none",
+        borderRadius: "3px",
+
+        color: "#000",
+    };
 
     let btnBackgroundColor;
     let btnColor;
     let btnTxtColor;
 
-    useEffect(() => {
-        btnCRef.current.style.width = "10rem";
-        btnCRef.current.style.height = "4rem";
+    if (primary) {
+        btnBackgroundColor = APP_COLORS.COLOR_PRIMARY;
+        btnColor = APP_COLORS.COLOR_PRIMARY;
+    }
 
-        btnCRef.current.style.fontSize = APP_FONTS.FONT_SIZE_300;
+    if (secondary) {
+        btnBackgroundColor = APP_COLORS.COLOR_SECONDARY;
+        btnColor = APP_COLORS.COLOR_SECONDARY;
+    }
 
-        btnCRef.current.style.border = "none";
-        btnCRef.current.style.borderRadius = "3px";
+    if (danger) {
+        btnBackgroundColor = APP_COLORS.COLOR_DANGER;
+        btnColor = APP_COLORS.COLOR_DANGER;
+        btnTxtColor = "#fff";
+    }
 
-        btnCRef.current.style.color = "#000";
+    if (disabled) {
+        btnBackgroundColor = APP_COLORS.COLOR_DISABLED;
+        btnColor = APP_COLORS.COLOR_DISABLED_TEXT;
+        btnTxtColor = APP_COLORS.COLOR_DISABLED_TEXT;
 
-        if (primary) {
-            btnBackgroundColor = APP_COLORS.COLOR_PRIMARY;
-            btnColor = APP_COLORS.COLOR_PRIMARY;
-        }
+        styles = {
+            ...styles,
+            cursor: "not-allowed",
+        };
+    }
 
-        if (secondary) {
-            btnBackgroundColor = APP_COLORS.COLOR_SECONDARY;
-            btnColor = APP_COLORS.COLOR_SECONDARY;
-        }
+    if (filled) {
+        styles = {
+            ...styles,
+            backgroundColor: btnBackgroundColor,
+            color: btnTxtColor,
+        };
+    }
 
-        if (danger) {
-            btnBackgroundColor = APP_COLORS.COLOR_DANGER;
-            btnColor = APP_COLORS.COLOR_DANGER;
-            btnTxtColor = "#fff";
-        }
+    if (outlined) {
+        styles = {
+            ...styles,
+            backgroundColor: "transparent",
+            border: `2px solid ${btnColor}`,
+            color: btnColor,
+        };
+    }
 
-        if (disabled) {
-            btnBackgroundColor = APP_COLORS.COLOR_DISABLED;
-            btnColor = APP_COLORS.COLOR_DISABLED_TEXT;
-            btnTxtColor = APP_COLORS.COLOR_DISABLED_TEXT;
+    if (dashed) {
+        styles = {
+            ...styles,
+            backgroundColor: "transparent",
+            border: `2px dashed ${btnColor}`,
+            color: btnColor,
+        };
+    }
 
-            btnCRef.current.style.cursor = "not-allowed";
-        }
+    if (xSmall) {
+        styles = {
+            ...styles,
+            width: "6rem",
+            height: "2rem",
+        };
+    }
 
-        if (filled) {
-            btnCRef.current.style.backgroundColor = btnBackgroundColor;
-            btnCRef.current.style.color = btnTxtColor;
-        }
+    if (small) {
+        styles = {
+            ...styles,
+            width: "8rem",
+            height: "3rem",
+        };
+    }
 
-        if (outlined) {
-            btnCRef.current.style.backgroundColor = "transparent";
-            btnCRef.current.style.border = `2px solid ${btnColor}`;
-            btnCRef.current.style.color = btnColor;
-        }
+    if (large) {
+        styles = {
+            ...styles,
+            width: "12rem",
+            height: "5rem",
+        };
+    }
 
-        if (dashed) {
-            btnCRef.current.style.backgroundColor = "transparent";
-            btnCRef.current.style.border = `2px dashed ${btnColor}`;
-            btnCRef.current.style.color = btnColor;
-        }
+    if (xLarge) {
+        styles = {
+            ...styles,
+            width: "14rem",
+            height: "6rem",
+        };
+    }
 
-        if (xSmall) {
-            btnCRef.current.style.width = "6rem";
-            btnCRef.current.style.height = "2rem";
-        }
+    if (sharpEdge) {
+        styles = {
+            ...styles,
+            borderRadius: "0",
+        };
+    }
 
-        if (small) {
-            btnCRef.current.style.width = "8rem";
-            btnCRef.current.style.height = "3rem";
-        }
-
-        if (large) {
-            btnCRef.current.style.width = "12rem";
-            btnCRef.current.style.height = "5rem";
-        }
-
-        if (xLarge) {
-            btnCRef.current.style.width = "14rem";
-            btnCRef.current.style.height = "6rem";
-        }
-
-        if (sharpEdge) {
-            btnCRef.current.style.borderRadius = "0";
-        }
-
-        if (icon) {
-            btnCRef.current.style.display = "flex";
-            btnCRef.current.style.alignItems = "center";
-            btnCRef.current.style.justifyContent = "center";
-            btnCRef.current.style.gap = "5px";
-        }
-    }, []);
+    if (icon) {
+        styles = {
+            ...styles,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "5px",
+        };
+    }
 
     return (
-        <button className="btn-c" ref={btnCRef} style={opt} {...otherProps}>
-            {children}
-            {icon}
+        <button className="btn-c" style={styles} {...otherProps}>
+            <span className="btn-c__name">{children}</span>
+
+            <span className="btn-c__icon">{icon}</span>
         </button>
     );
 };
